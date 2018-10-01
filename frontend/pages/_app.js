@@ -4,9 +4,11 @@ import App, { Container } from 'next/app';
 import withRedux from 'next-redux-wrapper';
 
 import initStore from '@Redux/create';
+import initialize from 'utils/initialize';
 
 export default withRedux(initStore)(class MyApp extends App {
   static async getInitialProps ({Component, ctx}) {
+    initialize(ctx);
     return {
       pageProps: (Component.getInitialProps ? await Component.getInitialProps(ctx) : {})
     }

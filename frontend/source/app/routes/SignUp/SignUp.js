@@ -8,7 +8,7 @@ import Router from 'next/router';
 import {
   authLoading,
   isAuthenticated,
-  signIn,
+  signUp,
 } from '@Redux/modules/auth';
 import {
   Container,
@@ -45,7 +45,7 @@ class SignUp extends Component {
     });
   }
   onSubmit(event) {
-    this.props.signIn(this.state);
+    this.props.signUp(this.state, Router);
     event.preventDefault();
   }
   render() {
@@ -70,7 +70,7 @@ class SignUp extends Component {
 SignUp.propTypes = {
   loading: PropTypes.bool.isRequired,
   authenticated: PropTypes.bool.isRequired,
-  signIn: PropTypes.func.isRequired,
+  signUp: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state =>
@@ -81,6 +81,6 @@ const mapStateToProps = state =>
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({
-    signIn,
+    signUp,
   }, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

@@ -1,6 +1,6 @@
 import Router from 'next/router';
 import {
-  signInSuccess,
+  signinUser,
   getToken,
 } from 'redux/modules/auth';
 import {
@@ -14,7 +14,7 @@ const initialize = (ctx) => {
   if (ctx.isServer) {
     if (ctx.req.headers.cookie) {
       token = getCookie('mj-token', ctx.req);
-      ctx.store.dispatch(signInSuccess(token));
+      ctx.store.dispatch(signinUser(token));
     }
   } else {
     token = getToken(ctx.store.getState());

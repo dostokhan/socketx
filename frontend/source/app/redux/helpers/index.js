@@ -7,11 +7,8 @@ export const toggleLoading = (state, loading = false) =>
     loading,
   });
 
-export const relativeToAbsoluteUrl = (relativePath = '') => {
-  return process.browser ?
-    `${process.env.API_URL_IN_BROWSER}${relativePath}` :
-    `${process.env.API_URL_IN_CONTAINER}${relativePath}`;
-};
+export const relativeToAbsoluteUrl = (relativePath = '') =>
+    `${API_URL}/${relativePath}`;
 
 export const getTokenData = (token) => {
   try{

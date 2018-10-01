@@ -1,7 +1,12 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
+import {
+  signoutUser,
+} from '@Redux/modules/auth';
 import {
   Row,
   Column,
@@ -18,6 +23,18 @@ import {
 
 
 class Header extends PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.signOut = this.signOut.bind(this);
+  }
+
+  signOut(event) {
+    event.preventDefault();
+    console.log('signout user');
+    this.props.signoutUser();
+  }
+
   render() {
     return (
       <HeaderTag>
@@ -53,7 +70,16 @@ class Header extends PureComponent {
               }
               {
                 this.props.authorized && (
-                  <UserName name={this.props.authUser.username} />
+                  <Fragment>
+                    <UserName name={this.props.authUser.username} />
+                    &nbsp;
+                    <Link
+                      href="/signout"
+                      passHref
+                    >
+                      <Anchor onClick={this.signOut}>Sign Out</Anchor>
+                    </Link>
+                  </Fragment>
                 )
               }
             </div>
@@ -69,5 +95,11 @@ Header.defaultProps = {
 Header.propTypes = {
   authUser: PropTypes.object,
   authorized: PropTypes.bool.isRequired,
+  signoutUser: PropTypes.func.isRequired,
 };
-export default WithAuth(Header);
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({
+    signoutUser,
+  }, dispatch);
+export default WithAuth(connect(null, mapDispatchToProps)(Header));

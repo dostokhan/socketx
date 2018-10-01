@@ -13,3 +13,4 @@ const PATHS = {
 };
 
 exports.PATHS = PATHS;
+exports.API_URL = 'http://localhost:8000';

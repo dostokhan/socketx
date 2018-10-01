@@ -45,7 +45,7 @@ class SignIn extends Component {
     });
   }
   onSubmit(event) {
-    this.props.signIn(this.state);
+    this.props.signIn(this.state, Router);
     event.preventDefault();
   }
   render() {

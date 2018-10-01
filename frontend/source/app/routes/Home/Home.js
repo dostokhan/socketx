@@ -1,8 +1,6 @@
 import React, { PureComponent } from 'react';
-// import { bindActionCreators } from 'redux';
-// import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
-
+import socketIOClient from 'socket.io-client'
+import Chart from 'chart.js';
 
 import {
   Row,
@@ -10,26 +8,61 @@ import {
   Container,
 } from '@Styled/Responsive';
 
-// import {
-//   getKhoborIds,
-//   khoborLoading,
-//   fetchKhoborList,
-// } from '@Redux/modules/khobor';
+import {
+  createChartData,
+} from './Home.utils';
+
 
 
 class Home extends PureComponent {
-  // componentWillMount() {
-  //   if (!this.props.loading && this.props.khoborIds.length === 0) {
-  //     console.warn('khobor not fetched');
-  //     this.props.fetchKhoborList();
-  //   }
-  // }
+  constructor(props) {
+    super(props);
+
+    this.canvasRef = React.createRef();
+    this._chart = null;
+
+    this.onDatapoints = this.onDatapoints.bind(this);
+    this.onNewDatapoints = this.onNewDatapoints.bind(this);
+    this.updateChart = this.updateChart.bind(this);
+  }
+  componentDidMount() {
+    const socket = socketIOClient('http://localhost:4004');
+
+    socket.on('datapoints', this.onDatapoints);
+    socket.on('newDatapoints', this.onNewDatapoints);
+  }
+
+  updateChart(datapoints) {
+    if (this._chart) {
+      console.log('update chart');
+      this._chart.data.datasets.forEach((dataset, index) => {
+        if (dataset.label === datapoints.user.username) {
+          dataset.data.push({ x: datapoints.x, y: datapoints.y });
+          console.log('got label');
+        }
+      });
+      this._chart.update();
+    } else {
+      const chartData = createChartData(datapoints);
+      console.log('create chart');
+      this._chart = new Chart(this.canvasRef.current, chartData);
+    }
+  }
+  onDatapoints(datapoints) {
+    console.log('got datapoints');
+    this.updateChart(JSON.parse(datapoints));
+  }
+  onNewDatapoints(newDatapoint) {
+    console.log('got new datapoints');
+    this.updateChart(JSON.parse(newDatapoint));
+  }
+
   render() {
     return (
       <Container>
         <Row wrap="wrap" mb={4}>
           <Column>
-            Charts
+            <canvas ref={this.canvasRef}/>
           </Column>
         </Row>
 
@@ -39,22 +72,3 @@ class Home extends PureComponent {
   }
 }
 export default Home;
-// Home.propTypes = {
-// //   authorized: PropTypes.bool.isRequired,
-//   khoborIds: PropTypes.array.isRequired,
-//   loading: PropTypes.bool.isRequired,
-
-//   fetchKhoborList: PropTypes.func.isRequired,
-// };
-
-// const mapStateToProps = state =>
-//   ({
-//     khoborIds: getKhoborIds(state),
-//     loading: khoborLoading(state),
-//   });
-// const mapDispatchToProps = dispatch =>
-//   bindActionCreators({
-//     fetchKhoborList,
-//   }, dispatch);
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Home);

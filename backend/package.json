@@ -1,0 +1,48 @@
+{
+  "name": "imonir.back",
+  "version": "1.0.0",
+  "description": "node start kit",
+  "main": "index.js",
+  "scripts": {
+    "start": "NODE_PATH=. nodemon index.js",
+    "build": "NODE_PATH=. NODE_ENV=production nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/dostokhan/imonir.back.git"
+  },
+  "keywords": [
+    "node",
+    "express"
+  ],
+  "author": "Moniruzzaman Monir",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dostokhan/imonir.back/issues"
+  },
+  "homepage": "https://github.com/dostokhan/imonir.back#readme",
+  "dependencies": {
+    "bcrypt": "3.0.1",
+    "body-parser": "^1.18.2",
+    "compression": "^1.7.1",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
+    "dotenv": "^4.0.0",
+    "express": "^4.16.2",
+    "express-jwt": "^5.3.0",
+    "express-session": "^1.15.6",
+    "http-status": "^1.2.0",
+    "jsonwebtoken": "^8.1.0",
+    "mongoose": "5.3.0",
+    "morgan": "^1.9.0",
+    "octonode": "^0.9.1",
+    "socket.io": "2.1.1",
+    "winston": "^3.0.0-rc1"
+  },
+  "devDependencies": {
+    "eslint": "^5.3.0",
+    "eslint-plugin-node": "^7.0.1",
+    "nodemon": "^1.12.1"
+  }
+}

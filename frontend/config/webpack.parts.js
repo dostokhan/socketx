@@ -3,6 +3,7 @@ const path = require('path');
 
 const {
   PATHS,
+  API_URL,
 } = require('./constants');
 
 exports.setGlobalVariables = (target, override = {}) => ({
@@ -11,6 +12,7 @@ exports.setGlobalVariables = (target, override = {}) => ({
       'process.env': {
         NODE_ENV: JSON.stringify(target),
       },
+      API_URL: JSON.stringify(API_URL),
       PRODUCTION: JSON.stringify(target === 'production'),
       DEBUG: JSON.stringify(target !== 'production'),
     }, override)),
